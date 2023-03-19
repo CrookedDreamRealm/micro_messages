@@ -12,6 +12,7 @@ public class MessageImpl implements MessageRepository {
     List<Message> messages = new ArrayList<>();
     @Override
     public List<Message> getMessages() {
+
         return messages;
     }
 
