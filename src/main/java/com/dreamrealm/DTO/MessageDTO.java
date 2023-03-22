@@ -7,9 +7,12 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Getter
 @Setter
-@Entity
+@Entity(name="message")
 public class MessageDTO {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -19,4 +22,5 @@ public class MessageDTO {
     public String description;
     public Integer upVotes;
     public Integer downVotes;
+    public LocalDateTime dateOfCreation;
 }

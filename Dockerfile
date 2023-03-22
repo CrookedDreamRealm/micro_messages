@@ -10,5 +10,6 @@ RUN ./mvnw package
 
 FROM eclipse-temurin:17-jre-jammy as production
 EXPOSE 8080
-COPY --from=build /app/target/micro_messages-0.0.1-SNAPSHOT.jar micro_messages-0.0.1-SNAPSHOT.jar
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/micro_messages-0.0.1-SNAPSHOT.jar"]
+#ARG JAR_FILE=app/target/*.jar
+COPY --from=build /app/target/*.jar messages.jar
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/messages.jar"]

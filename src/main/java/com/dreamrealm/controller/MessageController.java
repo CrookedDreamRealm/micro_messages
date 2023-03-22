@@ -2,9 +2,11 @@ package com.dreamrealm.controller;
 
 
 import com.dreamrealm.DTO.MessageDTO;
+import com.dreamrealm.logic.MessageLogic;
 import com.dreamrealm.model.Message;
 import com.dreamrealm.repository.MessageRepo;
 import com.dreamrealm.repository.MessageRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,24 +15,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 public class MessageController {
-    @Autowired
-    MessageRepository messageRepo;
+   @Autowired
+   MessageRepository messageRepo;
 
-    @Autowired
-    MessageRepo messageRep;
+   @Autowired
+   MessageLogic messageLogic;
    @RequestMapping(value = "/test", method = RequestMethod.GET)
    public ResponseEntity<?> get(){
         return ResponseEntity.ok().body("test");
    }
 
     @RequestMapping(value = "createMessage", method = RequestMethod.POST)
-    public boolean createMessage(@Valid @RequestBody Message message){
-        messageRepo.createMessages(message);
-        return true;
+    public ResponseEntity<?> createMessage(@Valid @RequestBody Message message){
+        Boolean response = messageRepo.createMessages(message);
+        return ResponseEntity.ok()
+                .body(response);
     }
 
     @RequestMapping(value= "getMessages", method = RequestMethod.GET)
@@ -41,25 +45,18 @@ public class MessageController {
     }
 
     @RequestMapping(value = "addMessage", method = RequestMethod.POST)
-    public boolean addMessage(@Valid @RequestBody Message message){
+    public ResponseEntity<?> addMessage(@Valid @RequestBody Message message){
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
-
-        MessageDTO messageAdd = new MessageDTO();
-        messageAdd.setDescription(message.getDescription());
-        messageAdd.setTitle(message.getTitle());
-        messageAdd.setUsername(message.getUsername());
-        messageAdd.setDownVotes(message.getDownVotes());
-        messageAdd.setUpVotes(message.getUpVotes());
-        messageRep.save(messageAdd);
-        return true;
+        Boolean response = messageLogic.createMessages(message);
+        return ResponseEntity.ok()
+                .body(response);
     }
 
     @RequestMapping(value= "getAllMessages", method = RequestMethod.GET)
     public ResponseEntity<?> getAllMessages() {
-        List<MessageDTO> messages = (List<MessageDTO>) messageRep.findAll();
+        List<Message> messages = messageLogic.getAllMessages();
         return ResponseEntity.ok()
                 .body(messages);
     }
-
 }
