@@ -1,4 +1,5 @@
+RUN ./mvnw package
+
 FROM openjdk:17-jdk-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} messages.jar
+COPY ${target/*.jar} messages.jar
 ENTRYPOINT ["java","-jar","/messages.jar"]
