@@ -1,5 +1,14 @@
+FROM eclipse-temurin:17-jdk-jammy as base
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:resolve
+COPY src ./src
+
+FROM base as build
 RUN ./mvnw package
 
-FROM openjdk:17-jdk-alpine
-COPY ${target/*.jar} messages.jar
-ENTRYPOINT ["java","-jar","/messages.jar"]
+FROM eclipse-temurin:17-jre-jammy as production
+#ARG JAR_FILE=app/target/*.jar
+COPY --from=build /app/target/*.jar messages.jar
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/messages.jar"]
