@@ -17,3 +17,4 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.organization=dreamrealm2
           -Dsonar.projectKey=CrookedDreamRealm_micro_messages
+          -Dsonar.source=.
