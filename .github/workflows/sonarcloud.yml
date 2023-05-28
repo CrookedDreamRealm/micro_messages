@@ -32,5 +32,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd /
-          cd micro_messages
+          cd CrookedDreamRealm/micro_messages
           mvn --batch-mode --update-snapshots verify -B verify sonar:sonar -Dsonar.projectKey=CrookedDreamRealm_micro_messages -Dsonar.organization=dreamrealm2 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
