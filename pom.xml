@@ -17,7 +17,7 @@
 		<java.version>17</java.version>
 		<sonar.projectKey>CrookedDreamRealm_micro_messages</sonar.projectKey>
 		<sonar.organization>crookeddreamrealm</sonar.organization>
-		<sonar.sources>micro_messages</sonar.sources>
+		<sonar.projectBaseDir>micro_messages</sonar.projectBaseDir>
 	</properties>
 	<dependencies>
 		<dependency>
