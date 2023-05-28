@@ -42,7 +42,7 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
       
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package org.sonarsource.scanner.maven:sonar --file pom.xml
    
     - name: Login To Registry
       uses: docker/login-action@v2.1.0
