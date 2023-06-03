@@ -47,7 +47,8 @@ public class MessageController {
     public ResponseEntity<?> addMessage(@Valid @RequestBody Message message){
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
-        Boolean response = messageLogic.createMessages(message);
+        //Boolean response = messageLogic.createMessages(message);
+        var response = messageLogic.createMessages(message);
         return ResponseEntity.ok()
                 .body(response);
     }

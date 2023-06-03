@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,15 +17,16 @@ import java.util.stream.Collectors;
 public class MessageLogic {
     @Autowired
     MessageRepo messageRep;
-    public boolean createMessages(Message message){
+    public String createMessages(Message message){
         try{
             ModelMapper modelMapper = new ModelMapper();
             MessageDTO messageDTO = modelMapper.map(message, MessageDTO.class);
+            messageDTO.setDateOfCreation(LocalDateTime.now());
             messageRep.save(messageDTO);
-            return true;
+            return "works";
         }
         catch(Exception e) {
-            return false;
+            return e.getMessage();
         }
     }
 
@@ -33,5 +35,19 @@ public class MessageLogic {
         ModelMapper modelMapper = new ModelMapper();
         List<Message> messages = messageDTO.stream().map(message -> modelMapper.map(message, Message.class)).collect(Collectors.toList());
         return messages;
+    }
+
+    public boolean removeUserFromMessage(String id){
+        try{
+            List<MessageDTO> oldItems = messageRep.findBySender(id);
+            for(MessageDTO oldItem : oldItems){
+                oldItem.setSender(null);
+                messageRep.save(oldItem);
+            }
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
     }
 }
