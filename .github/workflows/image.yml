@@ -51,7 +51,7 @@ jobs:
       with:
         # GitHub Token used to authenticate against a repository for Git context
         github-token: ${{secrets.DOCKER_TOKEN}}
-        context: ${{env.REGISTRY}}
+        context: ${{github.repositoryUrl}}
         push: true
         tags: dreamrealm/messagemicroservice:v1
 
