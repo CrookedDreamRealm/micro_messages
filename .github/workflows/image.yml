@@ -1,11 +1,3 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
-
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Java CI with Maven
 
 on:
@@ -43,17 +35,19 @@ jobs:
       
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    
-    - name: Build and push Docker images
-      # You may pin to the exact commit or the version.
-      # uses: docker/build-push-action@44ea916f6c540f9302d50c2b1e5a8dc071f15cdf
-      uses: docker/build-push-action@v4.1.0
+   
+    - name: Login To Registry
+      uses: docker/login-action@v2.1.0
       with:
-        # GitHub Token used to authenticate against a repository for Git context
-        github-token: ${{secrets.DOCKER_TOKEN}}
-        context: ./Dockerfile
-        push: true
-        tags: dreamrealm/messagemicroservice:v1
+        registry: ${{env.REGISTRY}}
+        username: ${{github.actor}}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-      
+    - name: Build message Image
+      working-directory: ./
+      run: docker build -t dreamrealm/micro_messages:v1 .
+
+    - name: Push message Image
+      working-directory: ./
+      run: docker push dreamrealm/micro_messages:v1
     
