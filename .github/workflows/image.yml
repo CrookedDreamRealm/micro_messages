@@ -45,9 +45,9 @@ jobs:
 
     - name: Build message Image
       working-directory: ./
-      run: docker build -t dreamrealm/micro_messages:v1 .
+      run: docker build -t dreamrealm/messagemicroservice:v1 .
 
     - name: Push message Image
       working-directory: ./
-      run: docker push dreamrealm/micro_messages:v1
+      run: docker push dreamrealm/messagemicroservice:v1
     
