@@ -14,6 +14,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
   build:
   
@@ -48,6 +51,7 @@ jobs:
       with:
         # GitHub Token used to authenticate against a repository for Git context
         github-token: ${{secrets.DOCKER_TOKEN}}
+        context: ${{env.REGISTRY}}
         push: true
         tags: dreamrealm/messagemicroservice:v1
 
