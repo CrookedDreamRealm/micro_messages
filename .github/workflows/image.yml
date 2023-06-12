@@ -15,7 +15,7 @@ on:
     branches: [ "master" ]
 
 env:
-  REGISTRY: ghcr.io
+  REGISTRY: docker.io
 
 jobs:
   build:
@@ -48,15 +48,7 @@ jobs:
       uses: docker/login-action@v2.1.0
       with:
         registry: ${{env.REGISTRY}}
-        username: ${{github.actor}}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Build message Image
-      working-directory: ./
-      run: docker build -t ${{env.REGISTRY}}/crookeddreamrealm/micro_messages:v1 .
-
-    - name: Push message Image
-      working-directory: ./
-      run: docker push ${{env.REGISTRY}}/crookeddreamrealm/micro_messages:v1
+        username: ${{env.GITHUB_USER}}
+        password: ${{secrets.GITHUB_TOKEN }}
       
     
