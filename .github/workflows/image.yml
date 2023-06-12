@@ -49,7 +49,7 @@ jobs:
         # GitHub Token used to authenticate against a repository for Git context
         github-token: ${{secrets.DOCKER_TOKEN}}
         push: true
-        tags: ${{secrets.DOCKER_USER}}/messagemicroservice:v1
+        tags: DreamRealm/messagemicroservice:v1
 
       
     
