@@ -22,8 +22,8 @@ public class RabbitReceiver {
     @Autowired
     MessageLogic messageLogic;
 
-    @RabbitListener(queues = {"q.deleteInfoMessage"})
     @RabbitHandler
+    @RabbitListener(queues = {"q.deleteInfoMessage"})
     public void onOfferRegistration(String event)  {
         log.info("Delete account Event Received: {}", event);
         //executeRegistration(event);
